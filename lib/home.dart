@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:qwerty/beranda.dart';
 import 'package:parkirku/berandaa.dart';
 // import 'package:parkirku/parkir.dart';
-import 'package:parkirku/home_page.dart';
+import 'package:parkirku/history.dart';
 import 'package:parkirku/login.dart';
 import 'package:parkirku/akun.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
     //const Text('Beranda'),
       const berandaa(),
       // const RiwayatScreen(),
-      const HomePage(),
+      const History(),
       const akun()
     ];
 
