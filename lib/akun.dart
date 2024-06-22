@@ -7,7 +7,7 @@ class akun extends StatefulWidget {
   _akunState createState() => _akunState();
 }
 
-class _akunState extends State<akun>{
+class _akunState extends State<akun> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -16,7 +16,8 @@ class _akunState extends State<akun>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Halaman Akun'),
+        title: Text('Halaman Akun', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.red.shade900,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
