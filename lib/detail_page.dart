@@ -1,30 +1,34 @@
 import 'package:flutter/material.dart';
-// import 'package:Api/14/products.dart';
-// import 'products.dart';
-import 'package:parkirku/product.dart';
-
+import 'package:parkirku/parkir.dart';
 
 class DetailPage extends StatelessWidget {
-  final Products products;
-  const DetailPage({super.key, required this.products});
+  final Parkir parkir;
+  const DetailPage({super.key, required this.parkir});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Page'),
+        title: const Text(
+          'Detail Page',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.red.shade900,
       ),
       body: SafeArea(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          'id: ${products.idProduk}',
+          'id_parkir: ${parkir.idParkir}',
         ),
-        Text('Nama: ${products.namaProduk}'),
+        Text(
+          'Nama Pengguna: ${parkir.namaPengguna}',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         const SizedBox(
-          height: 20,
+          height: 5,
         ),
-        const Text('Harga: '),
-        Text(products.hargaProduk)
+        Text('Nomor Plaat: ${parkir.nomorPlat}'),
+        Text('Jenis Kendaraan: ${parkir.jenisKendaraan}'),
       ])),
     );
   }
