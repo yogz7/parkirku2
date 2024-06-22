@@ -16,7 +16,7 @@ class _berandaaState extends State<berandaa>{
         toolbarHeight: 80,
         title: Align(
               alignment: Alignment.bottomLeft, // Mengatur teks ke atas
-              child: Text('ParkirKu',style: TextStyle(fontSize: 30, ))
+              child: Text('ParkirKu',style: TextStyle(fontSize: 30, color: Colors.white))
         ),
       ),
       body: Padding(
