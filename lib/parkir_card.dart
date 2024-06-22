@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-// import '';
-// import 'datail_page.dart';
-// import 'products.dart';
-import 'package:parkirku/product.dart';
 import 'package:parkirku/detail_page.dart';
+import 'package:parkirku/parkir.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.products, required double width});
-  final Products products;
+class ParkirCard extends StatelessWidget {
+  const ParkirCard({super.key, required this.parkir, required double width});
+  final Parkir parkir;
 
   @override
   Widget build(BuildContext context) {
@@ -17,26 +14,25 @@ class ProductCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: ((context) {
-              return DetailPage(products: products);
+              return DetailPage(parkir: parkir);
             }),
           ),
         );
       },
       child: Container(
-          decoration: const BoxDecoration(color: Colors.white),
+          decoration: const BoxDecoration(color: Colors.transparent),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                products.namaProduk,
+                'Nama Pengguna : ${parkir.namaPengguna}',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: 15,
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(products.hargaProduk),
+              Text('nomor plat : ${parkir.nomorPlat}'),
+              Text('jenis kendaraan : ${parkir.jenisKendaraan}'),
             ],
           )),
     );
