@@ -2,43 +2,43 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-// import 'package:api/api/home_page.dart';
-// import 'package:parkirku/home_page.dart';
-import 'package:parkirku/home_page.dart';
+import 'package:parkirku/history.dart';
 
-class ProductEdit extends StatefulWidget {
-  const ProductEdit({super.key, required this.id});
+class ParkirEdit extends StatefulWidget {
+  const ParkirEdit({super.key, required this.id});
 
   final String id;
 
   @override
-  State<ProductEdit> createState() => _ProductEditState();
+  State<ParkirEdit> createState() => _ParkirEditState();
 }
 
-class _ProductEditState extends State<ProductEdit> {
-  late String idProduk;
-  final apiUrl = "http://192.168.253.102:8080/produk/edit/";
+class _ParkirEditState extends State<ParkirEdit> {
+  late String idParkir;
+  final apiUrl = 'http://192.168.253.102:8080/parkir/edit/';
   TextEditingController namaController = TextEditingController();
-  TextEditingController hargaController = TextEditingController();
+  TextEditingController nomorController = TextEditingController();
+  TextEditingController jenisController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    idProduk = widget.id;
-    fetchProducts(idProduk);
+    idParkir = widget.id;
+    fetchProducts(idParkir);
   }
 
   Future<void> fetchProducts(String data) async {
     final response =
-        await http.get(Uri.parse('http://192.168.253.102:8080/produk/$data'));
+        await http.get(Uri.parse('http://192.168.253.102:8080/parkir/$data'));
     // print(response.statusCode);
     // print(response.body);
 
     if (response.statusCode == 200) {
       var getPostsData = json.decode(response.body);
       setState(() {
-        namaController.text = getPostsData['nama_produk'];
-        hargaController.text = getPostsData['harga_produk'];
+        namaController.text = getPostsData['nama_pengguna'];
+        nomorController.text = getPostsData['nomor_plat'];
+        jenisController.text = getPostsData['jenis_kendaraan'];
       });
     } else {
       throw Exception('Failed to load Posts');
@@ -47,9 +47,10 @@ class _ProductEditState extends State<ProductEdit> {
 
   Future<void> updatePostRequest() async {
     var map = <String, dynamic>{};
-    map['nama_produk'] = namaController.text;
-    map['harga_produk'] = hargaController.text;
-    var response = await http.post(Uri.parse(apiUrl + idProduk), body: map);
+    map['nama_pengguna'] = namaController.text;
+    map['nomor_plat'] = nomorController.text;
+    map['jenis_kendaraan'] = jenisController.text;
+    var response = await http.post(Uri.parse(apiUrl + idParkir), body: map);
     // print(response.statusCode);
     // print(response.body);
 
@@ -64,7 +65,7 @@ class _ProductEditState extends State<ProductEdit> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                navHomePage();
+                navHistory();
               },
               child: const Text('OK'),
             ),
@@ -77,7 +78,7 @@ class _ProductEditState extends State<ProductEdit> {
         context: context,
         builder: (BuildContext context) => AlertDialog(
           title: const Text('Message'),
-          content: const Text("Failed to create product!"),
+          content: const Text("Failed to update data!"),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -91,10 +92,10 @@ class _ProductEditState extends State<ProductEdit> {
     }
   }
 
-  void navHomePage() {
+  void navHistory() {
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return const HomePage();
+      return const History();
     }));
   }
 
@@ -102,7 +103,11 @@ class _ProductEditState extends State<ProductEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ubah Produk"),
+        title: const Text(
+          'Ubah Parkir',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor: Colors.red.shade900,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -110,25 +115,25 @@ class _ProductEditState extends State<ProductEdit> {
           children: <Widget>[
             TextField(
               controller: namaController,
-              decoration: const InputDecoration(hintText: "Nama Produk"),
+              decoration: const InputDecoration(hintText: "Nama Pengguna"),
             ),
             TextField(
-              controller: hargaController,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              decoration: const InputDecoration(hintText: "Harga Produk"),
+              controller: nomorController,
+              decoration: const InputDecoration(hintText: "Nomor Plat"),
+            ),
+            TextField(
+              controller: jenisController,
+              decoration: const InputDecoration(hintText: "Jenis kendaraan"),
             ),
             ElevatedButton(
               onPressed: updatePostRequest,
-              child: const Text("Update Product"),
+              child: const Text("Update Parkir"),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: navHomePage,
+        onPressed: navHistory,
         tooltip: 'Increment',
         child: const Icon(Icons.home),
       ),
